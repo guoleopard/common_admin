@@ -30,15 +30,14 @@
               <template v-for="child in route.children" :key="child.path">
                 <el-menu-item
                   v-if="child.children && child.children.length > 0"
-                  :index="child.path"
+                  :index="`${route.path}/${child.path}`"
                 >
                   <el-icon v-if="child.meta.icon"><component :is="child.meta.icon" /></el-icon>
                   <span>{{ child.meta.title }}</span>
                 </el-menu-item>
                 <el-menu-item
                   v-else
-                  :index="child.path"
-                  @click="$router.push(child.path)"
+                  :index="`${route.path}/${child.path}`"
                 >
                   <el-icon v-if="child.meta.icon"><component :is="child.meta.icon" /></el-icon>
                   <span>{{ child.meta.title }}</span>
