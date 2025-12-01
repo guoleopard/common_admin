@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Layout from '../layout/Layout.vue'
 import Home from '../views/Home.vue'
-import UserManage from '../views/system/UserManage.vue'
-import RoleManage from '../views/system/RoleManage.vue'
-import MenuManage from '../views/system/MenuManage.vue'
+import UserManage from '../views/UserManage.vue'
+import RoleManage from '../views/RoleManage.vue'
+import MenuManage from '../views/MenuManage.vue'
 
 const routes = [
   {

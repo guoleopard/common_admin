@@ -114,7 +114,7 @@
 </template>
 
 <script setup>
-import { useThemeStore } from '../../store/modules/theme'
+import { useThemeStore } from '../store/modules/theme'
 import { ref, onMounted } from 'vue'
 import { Plus, Search, Edit, Delete, Menu } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
@@ -253,6 +253,19 @@ onMounted(() => {
 .role-container {
   width: 100%;
   height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.role-container :deep(.el-card) {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.role-container :deep(.el-card__body) {
+  flex: 1;
+  overflow-y: auto;
 }
 
 .card-header {

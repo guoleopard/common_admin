@@ -18,7 +18,7 @@
           text-color="#fff"
           active-text-color="#409eff"
         >
-          <template v-for="route in router.getRoutes()" :key="route.path">
+          <template v-for="route in menuRoutes" :key="route.path">
             <el-sub-menu
               v-if="route.children && !route.meta.hidden"
               :index="route.path"
@@ -29,15 +29,7 @@
               </template>
               <template v-for="child in route.children" :key="child.path">
                 <el-menu-item
-                  v-if="child.children && child.children.length > 0"
-                  :index="`${route.path}/${child.path}`"
-                >
-                  <el-icon v-if="child.meta.icon"><component :is="child.meta.icon" /></el-icon>
-                  <span>{{ child.meta.title }}</span>
-                </el-menu-item>
-                <el-menu-item
-                  v-else
-                  :index="`${route.path}/${child.path}`"
+                  :index="`/${route.path}/${child.path}`"
                 >
                   <el-icon v-if="child.meta.icon"><component :is="child.meta.icon" /></el-icon>
                   <span>{{ child.meta.title }}</span>
@@ -47,7 +39,6 @@
             <el-menu-item
               v-else-if="!route.meta.hidden"
               :index="route.path"
-              @click="$router.push(route.path)"
             >
               <el-icon v-if="route.meta.icon"><component :is="route.meta.icon" /></el-icon>
               <span>{{ route.meta.title }}</span>
@@ -94,7 +85,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useThemeStore } from '../store/modules/theme'
 import { Setting, User } from '@element-plus/icons-vue'
@@ -103,6 +94,16 @@ const router = useRouter()
 const themeStore = useThemeStore()
 const isCollapse = ref(false)
 const isDark = ref(themeStore.isDark)
+const menuRoutes = ref([])
+
+onMounted(() => {
+  // 获取根路由下的子路由作为菜单数据源
+  const rootRoute = router.getRoutes().find(r => r.path === '/')
+  if (rootRoute && rootRoute.children) {
+    console.log('Root route children:', rootRoute.children)
+    menuRoutes.value = rootRoute.children
+  }
+})
 
 const toggleTheme = () => {
   themeStore.toggleTheme()
@@ -112,6 +113,7 @@ const toggleTheme = () => {
 
 <style scoped>
 .admin-layout {
+  width: 100%;
   transition: all 0.3s;
 }
 

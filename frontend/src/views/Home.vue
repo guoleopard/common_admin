@@ -53,10 +53,21 @@ onMounted(() => {
 .home-container {
   width: 100%;
   height: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcome-card {
   max-width: 1200px;
+  width: 100%;
+  max-height: 600px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0 auto;
   text-align: center;
 }
