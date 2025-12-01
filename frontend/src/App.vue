@@ -1,0 +1,27 @@
+<script setup>
+</script>
+
+<template>
+  <router-view />
+</template>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+:root {
+  transition: all 0.3s;
+}
+
+:root.dark {
+  background-color: #141414;
+}
+</style>
