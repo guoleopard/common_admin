@@ -3,6 +3,10 @@ import { createRouter, createWebHistory } from 'vue-router'
 // 导入布局组件
 import Layout from '../layout/Layout.vue'
 
+// 导入页面组件
+import Login from '../views/Login.vue'
+import Profile from '../views/Profile.vue'
+
 // 导入功能模块组件
 import MenuManagement from '../views/system/MenuManagement.vue'
 import RoleManagement from '../views/system/RoleManagement.vue'
@@ -11,9 +15,17 @@ import UserManagement from '../views/system/UserManagement.vue'
 const routes = [
   {
     path: '/',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: '登录'
+    }
+  },
+  {
+    path: '/home',
     name: 'Layout',
     component: Layout,
-    redirect: '/menu-management',
+    redirect: '/home/menu-management',
     children: [
       {
         path: 'menu-management',
@@ -40,6 +52,15 @@ const routes = [
         meta: {
           title: '用户管理',
           icon: 'People'
+        }
+      },
+      {
+        path: 'profile',
+        name: 'Profile',
+        component: Profile,
+        meta: {
+          title: '个人中心',
+          icon: 'User'
         }
       }
     ]

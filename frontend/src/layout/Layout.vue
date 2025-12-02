@@ -17,11 +17,10 @@
         router
       >
         <el-menu-item
-          v-for="item in $router.options.routes[0].children"
+          v-for="item in $router.options.routes[1].children"
           :key="item.path"
-          :index="item.path"
+          :index="'/home/' + item.path"
         >
-          <component :is="item.meta.icon" />
           <template #title>{{ item.meta.title }}</template>
         </el-menu-item>
       </el-menu>
@@ -127,13 +126,13 @@ html, body {
 
 .sidebar-menu .el-menu-item .el-icon {
   margin-right: 8px;
-  font-size: 18px;
+  font-size: 14px;
 }
 
 /* 折叠状态下的菜单图标样式 */
 .sidebar-menu.is-collapse .el-menu-item .el-icon {
   margin-right: 0;
-  font-size: 20px;
+  font-size: 16px;
 }
 
 .main-container {
