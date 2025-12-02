@@ -17,9 +17,9 @@
         router
       >
         <el-menu-item
-          v-for="item in $router.options.routes[0].children"
+          v-for="item in $router.options.routes[1].children"
           :key="item.path"
-          :index="item.path"
+          :index="'/home/' + item.path"
         >
           <template #title>{{ item.meta.title }}</template>
         </el-menu-item>
