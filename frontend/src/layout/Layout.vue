@@ -29,7 +29,7 @@
               </template>
               <template v-for="child in route.children" :key="child.path">
                 <el-menu-item
-                  :index="`/${route.path}/${child.path}`"
+                  :index="route.path === '/' ? `/${child.path}` : `/${route.path}/${child.path}`"
                 >
                   <el-icon v-if="child.meta.icon"><component :is="child.meta.icon" /></el-icon>
                   <span>{{ child.meta.title }}</span>
@@ -62,15 +62,15 @@
               @click="toggleTheme"
               circle
             />
-            <el-dropdown>
+            <el-dropdown @command="handleCommand">
               <div class="user-info">
                 <el-icon><User /></el-icon>
                 <span>管理员</span>
               </div>
               <template #dropdown>
                 <el-dropdown-menu>
-                  <el-dropdown-item>个人中心</el-dropdown-item>
-                  <el-dropdown-item divided>退出登录</el-dropdown-item>
+                  <el-dropdown-item command="profile">个人中心</el-dropdown-item>
+                  <el-dropdown-item command="logout" divided>退出登录</el-dropdown-item>
                 </el-dropdown-menu>
               </template>
             </el-dropdown>
@@ -108,6 +108,15 @@ onMounted(() => {
 const toggleTheme = () => {
   themeStore.toggleTheme()
   isDark.value = themeStore.isDark
+}
+
+const handleCommand = (command) => {
+  if (command === 'profile') {
+    router.push('/profile')
+  } else if (command === 'logout') {
+    sessionStorage.removeItem('token')
+    router.push('/login')
+  }
 }
 </script>
 
