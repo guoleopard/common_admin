@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Layout from '../layout/Layout.vue'
+import Layout from '../layout/LayoutSimple.vue'
 import Login from '../views/login/Login.vue'
-import { Menu, User, UserFilled, Histogram, Setting as SettingIcon, Lock, Document, Bell } from '@element-plus/icons-vue'
+import { Menu, User, UserFilled, Histogram, Setting as SettingIcon, Lock, Document, Bell, OfficeBuilding, Table } from '@element-plus/icons-vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -76,6 +76,24 @@ const router = createRouter({
           meta: {
             title: '文档管理',
             icon: Document
+          }
+        },
+        {
+          path: 'department',
+          name: 'Department',
+          component: () => import('../views/department/Department.vue'),
+          meta: {
+            title: '部门管理',
+            icon: OfficeBuilding
+          }
+        },
+        {
+          path: 'dict',
+          name: 'Dict',
+          component: () => import('../views/dict/Dict.vue'),
+          meta: {
+            title: '数据字典',
+            icon: Table
           }
         },
         {
