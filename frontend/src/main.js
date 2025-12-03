@@ -1,14 +1,14 @@
 import { createApp } from 'vue'
 import './style.css'
-import App from './App.vue'
+import App from './AppTest.vue'
 
 // Element Plus
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
-// Router
-import router from './router'
+// Router - 使用测试路由排除问题
+import router from './router/testRouter.js'
 
 // Pinia
 import { createPinia } from 'pinia'
