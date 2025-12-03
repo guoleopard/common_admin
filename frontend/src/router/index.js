@@ -5,6 +5,8 @@ import Home from '../views/Home.vue'
 import UserManage from '../views/UserManage.vue'
 import RoleManage from '../views/RoleManage.vue'
 import MenuManage from '../views/MenuManage.vue'
+import DeptManage from '../views/DeptManage.vue'
+import DictManage from '../views/DictManage.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
 
@@ -54,6 +56,18 @@ const routes = [
             name: 'MenuManage',
             component: MenuManage,
             meta: { title: '菜单管理', icon: 'Menu', requireAuth: true }
+          },
+          {
+            path: 'dept',
+            name: 'DeptManage',
+            component: DeptManage,
+            meta: { title: '部门管理', icon: 'OfficeBuilding', requireAuth: true }
+          },
+          {
+            path: 'dict',
+            name: 'DictManage',
+            component: DictManage,
+            meta: { title: '数据字典', icon: 'List', requireAuth: true }
           }
         ]
       }
