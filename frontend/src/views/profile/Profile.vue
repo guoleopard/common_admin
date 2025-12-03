@@ -164,7 +164,7 @@ import { ref, reactive, onMounted, computed } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import { Camera, Upload } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/user'
-import { updateUserInfo, updatePassword, uploadUserAvatar } from '@/utils/api'
+
 
 const userStore = useUserStore()
 const baseFormRef = ref(null)
@@ -252,14 +252,12 @@ const saveBaseInfo = async () => {
     await baseFormRef.value.validate()
     baseLoading.value = true
 
-    const response = await updateUserInfo(baseForm)
-    if (response.code === 200) {
-      ElMessage.success('基本信息保存成功')
-      // 更新用户信息
-      userStore.setUserInfo({ ...userInfo.value, ...baseForm })
-    } else {
-      ElMessage.error(response.msg || '基本信息保存失败')
-    }
+    // 模拟后端接口调用
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    ElMessage.success('基本信息保存成功')
+    // 更新用户信息
+    userStore.setUserInfo({ ...userInfo.value, ...baseForm })
   } catch (error) {
     ElMessage.error('基本信息保存失败')
   } finally {
@@ -273,24 +271,18 @@ const changePassword = async () => {
     await securityFormRef.value.validate()
     securityLoading.value = true
 
-    const response = await updatePassword({
-      oldPassword: securityForm.oldPassword,
-      newPassword: securityForm.newPassword
-    })
+    // 模拟后端接口调用
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
-    if (response.code === 200) {
-      ElMessage.success('密码修改成功，请重新登录')
-      // 清除表单数据
-      securityForm.oldPassword = ''
-      securityForm.newPassword = ''
-      securityForm.confirmPassword = ''
-      // 退出登录
-      setTimeout(() => {
-        userStore.logout()
-      }, 1500)
-    } else {
-      ElMessage.error(response.msg || '密码修改失败')
-    }
+    ElMessage.success('密码修改成功，请重新登录')
+    // 清除表单数据
+    securityForm.oldPassword = ''
+    securityForm.newPassword = ''
+    securityForm.confirmPassword = ''
+    // 退出登录
+    setTimeout(() => {
+      userStore.logout()
+    }, 1500)
   } catch (error) {
     ElMessage.error('密码修改失败')
   } finally {
@@ -327,16 +319,16 @@ const beforeAvatarUpload = (file) => {
 // 上传头像
 const uploadAvatar = async (options) => {
   try {
-    const formData = new FormData()
-    formData.append('avatar', options.file)
+    // 模拟后端接口调用
+    await new Promise(resolve => setTimeout(resolve, 1000))
 
-    const response = await uploadUserAvatar(formData)
-    if (response.code === 200) {
-      tempAvatar.value = response.data.avatar
+    // 使用图片的base64作为头像
+    const reader = new FileReader()
+    reader.onload = (e) => {
+      tempAvatar.value = e.target.result
       ElMessage.success('头像上传成功')
-    } else {
-      ElMessage.error(response.msg || '头像上传失败')
     }
+    reader.readAsDataURL(options.file)
   } catch (error) {
     ElMessage.error('头像上传失败')
   }
@@ -351,18 +343,15 @@ const saveAvatar = async () => {
     }
 
     avatarLoading.value = true
-    // 更新用户头像
-    const response = await updateUserInfo({ avatar: tempAvatar.value })
-    if (response.code === 200) {
-      ElMessage.success('头像保存成功')
-      // 更新用户信息
-      userStore.setUserInfo({ ...userInfo.value, avatar: tempAvatar.value })
-      // 关闭对话框
-      avatarDialogVisible.value = false
-      tempAvatar.value = ''
-    } else {
-      ElMessage.error(response.msg || '头像保存失败')
-    }
+    // 模拟后端接口调用
+    await new Promise(resolve => setTimeout(resolve, 1000))
+
+    ElMessage.success('头像保存成功')
+    // 更新用户信息
+    userStore.setUserInfo({ ...userInfo.value, avatar: tempAvatar.value })
+    // 关闭对话框
+    avatarDialogVisible.value = false
+    tempAvatar.value = ''
   } catch (error) {
     ElMessage.error('头像保存失败')
   } finally {

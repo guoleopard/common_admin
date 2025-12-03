@@ -22,16 +22,38 @@
         active-text-color="var(--el-color-primary)"
         router
       >
-        <el-menu-item
-          v-for="route in $router.options.routes[0].children"
-          :key="route.path"
-          :index="route.path"
-        >
-          <el-icon :size="16">
-            <component :is="route.meta.icon" />
-          </el-icon>
-          <template #title>{{ route.meta.title }}</template>
-        </el-menu-item>
+        <template v-for="route in $router.options.routes[0].children" :key="route.path">
+          <el-sub-menu
+            v-if="route.children && route.children.length > 0"
+            :index="route.path"
+          >
+            <template #title>
+              <el-icon :size="16">
+                <component :is="route.meta.icon" />
+              </el-icon>
+              <span>{{ route.meta.title }}</span>
+            </template>
+            <el-menu-item
+              v-for="childRoute in route.children"
+              :key="childRoute.path"
+              :index="childRoute.path"
+            >
+              <el-icon :size="16">
+                <component :is="childRoute.meta.icon" />
+              </el-icon>
+              <template #title>{{ childRoute.meta.title }}</template>
+            </el-menu-item>
+          </el-sub-menu>
+          <el-menu-item
+            v-else
+            :index="route.path"
+          >
+            <el-icon :size="16">
+              <component :is="route.meta.icon" />
+            </el-icon>
+            <template #title>{{ route.meta.title }}</template>
+          </el-menu-item>
+        </template>
       </el-menu>
     </el-aside>
 
@@ -115,6 +137,7 @@ import {
   Moon,
   Sunny,
   User,
+  UserFilled,
   SwitchButton
 } from '@element-plus/icons-vue'
 
