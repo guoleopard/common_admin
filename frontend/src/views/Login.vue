@@ -83,7 +83,7 @@ const generateCaptcha = () => {
   captchaCode.value = code
   
   // 设置字体
-  ctx.font = '40px Arial'
+  ctx.font = '80px Arial'
   ctx.textBaseline = 'middle'
   
   // 绘制验证码文字（每个字符随机位置和颜色）
@@ -92,7 +92,7 @@ const generateCaptcha = () => {
     ctx.fillStyle = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
     
     // 随机位置和旋转角度
-    const x = 5 + i * 35
+    const x = 20 + i * 60
     const y = height / 2
     const rotation = (Math.random() - 0.5) * 0.5 // 随机旋转角度
     
