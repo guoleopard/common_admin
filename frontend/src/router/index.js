@@ -11,6 +11,8 @@ import Profile from '../views/Profile.vue'
 import MenuManagement from '../views/system/MenuManagement.vue'
 import RoleManagement from '../views/system/RoleManagement.vue'
 import UserManagement from '../views/system/UserManagement.vue'
+import DeptManagement from '../views/system/DeptManagement.vue'
+import DictManagement from '../views/system/DictManagement.vue'
 
 const routes = [
   {
@@ -52,6 +54,24 @@ const routes = [
         meta: {
           title: '用户管理',
           icon: 'People'
+        }
+      },
+      {
+        path: 'dept-management',
+        name: 'DeptManagement',
+        component: DeptManagement,
+        meta: {
+          title: '部门管理',
+          icon: 'Tree'
+        }
+      },
+      {
+        path: 'dict-management',
+        name: 'DictManagement',
+        component: DictManagement,
+        meta: {
+          title: '数据字典管理',
+          icon: 'Document'
         }
       },
       {
