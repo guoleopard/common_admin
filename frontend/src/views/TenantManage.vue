@@ -1,17 +1,17 @@
 <template>
-  <div class="dept-container" :class="{ dark: isDark }">
+  <div class="tenant-container" :class="{ dark: isDark }">
     <el-card>
       <div class="card-header">
-        <h2>部门管理</h2>
+        <h2>租户管理</h2>
         <el-button type="primary" @click="openAddDialog">
           <el-icon><Plus /></el-icon>
-          新增部门
+          新增租户
         </el-button>
       </div>
       <div class="search-bar">
         <el-input
-          v-model="searchForm.deptName"
-          placeholder="请输入部门名称"
+          v-model="searchForm.tenantName"
+          placeholder="请输入租户名称"
           style="width: 200px; margin-right: 10px"
           clearable
         >
@@ -20,8 +20,8 @@
           </template>
         </el-input>
         <el-input
-          v-model="searchForm.leader"
-          placeholder="请输入部门负责人"
+          v-model="searchForm.contactName"
+          placeholder="请输入联系人姓名"
           style="width: 200px; margin-right: 10px"
           clearable
         >
@@ -38,30 +38,25 @@
         stripe
         style="width: 100%; margin-top: 20px"
       >
-        <el-table-column prop="id" label="ID" width="80" align="center" />
-        <el-table-column prop="deptName" label="部门名称" align="center" />
-        <el-table-column prop="parentName" label="上级部门" align="center" />
-        <el-table-column prop="leader" label="负责人" align="center" />
-        <el-table-column prop="phone" label="联系电话" align="center" />
+        <el-table-column prop="id" label="ID" width="80" align="center" /> 
+        <el-table-column prop="tenantName" label="租户名称" align="center" /> 
+        <el-table-column prop="contactName" label="联系人" align="center" /> 
+        <el-table-column prop="contactPhone" label="联系电话" align="center" /> 
         <el-table-column prop="status" label="状态" align="center">
           <template #default="scope">
-            <el-switch v-model="scope.row.status" active-value="1" inactive-value="0" />
+            <el-switch v-model="scope.row.status" active-value="1" inactive-value="0" /> 
           </template>
         </el-table-column>
-        <el-table-column prop="createTime" label="创建时间" align="center" />
+        <el-table-column prop="createTime" label="创建时间" align="center" /> 
         <el-table-column label="操作" align="center" width="200">
           <template #default="scope">
-            <el-button size="small" @click="editDept(scope.row)">
+            <el-button size="small" @click="editTenant(scope.row)">
               <el-icon><Edit /></el-icon>
               编辑
             </el-button>
-            <el-button size="small" type="danger" @click="deleteDept(scope.row)">
+            <el-button size="small" type="danger" @click="deleteTenant(scope.row)">
               <el-icon><Delete /></el-icon>
               删除
-            </el-button>
-            <el-button size="small" @click="viewChildren(scope.row)">
-              <el-icon><Folder /></el-icon>
-              查看下级
             </el-button>
           </template>
         </el-table-column>
@@ -79,123 +74,89 @@
       </div>
     </el-card>
 
-    <!-- 添加/编辑部门弹窗 -->
+    <!-- 添加/编辑租户弹窗 -->
     <el-dialog v-model="dialogVisible" :title="dialogTitle" width="500px">
       <el-form :model="formData" label-width="100px">
-        <el-form-item label="部门名称">
-          <el-input v-model="formData.deptName" placeholder="请输入部门名称" />
+        <el-form-item label="租户名称">
+          <el-input v-model="formData.tenantName" placeholder="请输入租户名称" /> 
         </el-form-item>
-        <el-form-item label="上级部门">
-          <el-select v-model="formData.parentId" placeholder="请选择上级部门">
-            <el-option label="无" value="0" />
-            <el-option
-              v-for="dept in deptOptions"
-              :key="dept.id"
-              :label="dept.deptName"
-              :value="dept.id"
-              :disabled="formData.id && dept.id === formData.id"
-            />
-          </el-select>
-        </el-form-item>
-        <el-form-item label="负责人">
-          <el-input v-model="formData.leader" placeholder="请输入部门负责人" />
+        <el-form-item label="联系人">
+          <el-input v-model="formData.contactName" placeholder="请输入联系人姓名" /> 
         </el-form-item>
         <el-form-item label="联系电话">
-          <el-input v-model="formData.phone" placeholder="请输入联系电话" />
+          <el-input v-model="formData.contactPhone" placeholder="请输入联系电话" /> 
         </el-form-item>
         <el-form-item label="状态">
-          <el-switch v-model="formData.status" active-value="1" inactive-value="0" />
+          <el-switch v-model="formData.status" active-value="1" inactive-value="0" /> 
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="saveDept">保存</el-button>
+          <el-button type="primary" @click="saveTenant">保存</el-button>
         </span>
       </template>
     </el-dialog>
-
-
   </div>
 </template>
 
 <script setup>
 import { useThemeStore } from '../store/modules/theme'
 import { ref, onMounted } from 'vue'
-import { Plus, Search, User, Edit, Delete, Folder } from '@element-plus/icons-vue'
+import { Plus, Search, User, Edit, Delete } from '@element-plus/icons-vue'
 import { ElMessage } from 'element-plus'
 
 const themeStore = useThemeStore()
 const isDark = ref(themeStore.isDark)
 
 const dialogVisible = ref(false)
-const childrenVisible = ref(false)
-const dialogTitle = ref('新增部门')
+const dialogTitle = ref('新增租户')
 const formData = ref({
   id: '',
-  deptName: '',
-  parentId: '0',
-  leader: '',
-  phone: '',
+  tenantName: '',
+  contactName: '',
+  contactPhone: '',
   status: '1'
 })
 
 const searchForm = ref({
-  deptName: '',
-  leader: ''
+  tenantName: '',
+  contactName: ''
 })
 
 const currentPage = ref(1)
 const pageSize = ref(10)
 const total = ref(100)
 
-const deptOptions = ref([
-  { id: 1, deptName: '技术部' },
-  { id: 2, deptName: '产品部' },
-  { id: 3, deptName: '运营部' }
-])
-
 const tableData = ref([
-  { id: 1, deptName: '技术部', parentName: '无', leader: '张三', phone: '13800138000', status: '1', createTime: '2024-01-01 10:00:00' },
-  { id: 2, deptName: '前端组', parentName: '技术部', leader: '李四', phone: '13800138001', status: '1', createTime: '2024-01-02 10:00:00' },
-  { id: 3, deptName: '后端组', parentName: '技术部', leader: '王五', phone: '13800138002', status: '1', createTime: '2024-01-03 10:00:00' },
-  { id: 4, deptName: '产品部', parentName: '无', leader: '赵六', phone: '13800138003', status: '1', createTime: '2024-01-04 10:00:00' }
+  { id: 1, tenantName: '租户A', contactName: '张三', contactPhone: '13800138000', status: '1', createTime: '2024-01-01 10:00:00' },
+  { id: 2, tenantName: '租户B', contactName: '李四', contactPhone: '13800138001', status: '1', createTime: '2024-01-02 10:00:00' },
+  { id: 3, tenantName: '租户C', contactName: '王五', contactPhone: '13800138002', status: '0', createTime: '2024-01-03 10:00:00' }
 ])
-
-const childrenData = ref([])
 
 const openAddDialog = () => {
-  dialogTitle.value = '新增部门'
+  dialogTitle.value = '新增租户'
   formData.value = {
     id: '',
-    deptName: '',
-    parentId: '0',
-    leader: '',
-    phone: '',
+    tenantName: '',
+    contactName: '',
+    contactPhone: '',
     status: '1'
   }
   dialogVisible.value = true
 }
 
-const editDept = (row) => {
-  dialogTitle.value = '编辑部门'
+const editTenant = (row) => {
+  dialogTitle.value = '编辑租户'
   formData.value = { ...row }
   dialogVisible.value = true
 }
 
-const deleteDept = (row) => {
+const deleteTenant = (row) => {
   ElMessage.success('删除成功')
 }
 
-const viewChildren = (row) => {
-  childrenData.value = tableData.value.filter(dept => dept.parentId === row.id || dept.parentName === row.deptName)
-  childrenVisible.value = true
-  if (childrenData.value.length === 0) {
-    ElMessage.info('该部门暂无下级部门')
-  }
-}
-
-const saveDept = () => {
+const saveTenant = () => {
   dialogVisible.value = false
   ElMessage.success('保存成功')
 }
@@ -206,8 +167,8 @@ const search = () => {
 
 const reset = () => {
   searchForm.value = {
-    deptName: '',
-    leader: ''
+    tenantName: '',
+    contactName: ''
   }
 }
 
@@ -220,12 +181,12 @@ const handleCurrentChange = (val) => {
 }
 
 onMounted(() => {
-  // 初始化部门数据
+  // 初始化租户数据
 })
 </script>
 
 <style scoped>
-.dept-container {
+.tenant-container {
   padding: 20px;
   min-height: 100vh;
 }
