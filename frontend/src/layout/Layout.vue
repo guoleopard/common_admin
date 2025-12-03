@@ -88,7 +88,7 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useThemeStore } from '../store/modules/theme'
-import { Setting, User } from '@element-plus/icons-vue'
+import { Setting, User, OfficeBuilding, List } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const themeStore = useThemeStore()

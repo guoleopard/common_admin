@@ -33,7 +33,7 @@
               size="large"
             />
             <div class="captcha-img" @click="refreshCaptcha">
-              <canvas ref="captchaCanvas" width="120" height="40"></canvas>
+              <canvas ref="captchaCanvas" width="180" height="40" class="captcha-canvas"></canvas>
             </div>
           </div>
         </el-form-item>
@@ -87,6 +87,7 @@ const generateCaptcha = () => {
   for (let i = 0; i < 4; i++) {
     code += chars.charAt(Math.floor(Math.random() * chars.length))
   }
+  console.log(code)
   return code
 }
 
@@ -111,7 +112,7 @@ const drawCaptcha = (code) => {
   }
   
   // 绘制干扰点
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 40; i++) {
     ctx.fillStyle = `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`
     ctx.beginPath()
     ctx.arc(Math.random() * captchaCanvas.value.width, Math.random() * captchaCanvas.value.height, 1, 0, 2 * Math.PI)
@@ -123,7 +124,7 @@ const drawCaptcha = (code) => {
   const fontSize = 20
   ctx.font = `${fontSize}px Arial`
   for (let i = 0; i < code.length; i++) {
-    const x = 15 + i * (captchaCanvas.value.width - 30) / code.length
+    const x = 0 + i * (captchaCanvas.value.width - 60) / code.length
     const y = captchaCanvas.value.height / 2
     ctx.fillStyle = `rgb(${Math.floor(Math.random() * 100)}, ${Math.floor(Math.random() * 100)}, ${Math.floor(Math.random() * 100)})`
     ctx.save()
@@ -226,7 +227,7 @@ onMounted(() => {
 }
 
 .captcha-img {
-  width: 120px;
+  width: 180px;
   height: 40px;
   border: 1px solid #dcdfe6;
   border-radius: 4px;
