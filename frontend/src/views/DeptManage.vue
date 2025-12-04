@@ -115,7 +115,26 @@
       </template>
     </el-dialog>
 
-
+    <!-- 下级部门弹窗 -->
+    <el-dialog v-model="childrenVisible" title="下级部门" width="700px">
+      <el-table
+        :data="childrenData"
+        border
+        stripe
+        style="width: 100%"
+      >
+        <el-table-column prop="id" label="ID" width="80" align="center" />
+        <el-table-column prop="deptName" label="部门名称" align="center" />
+        <el-table-column prop="leader" label="负责人" align="center" />
+        <el-table-column prop="phone" label="联系电话" align="center" />
+        <el-table-column prop="status" label="状态" align="center">
+          <template #default="scope">
+            <el-tag type="success" v-if="scope.row.status === '1'">启用</el-tag>
+            <el-tag type="danger" v-else>禁用</el-tag>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 

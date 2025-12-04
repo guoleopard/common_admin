@@ -8,6 +8,7 @@ import MenuManage from '../views/MenuManage.vue'
 import DeptManage from '../views/DeptManage.vue'
 import DictManage from '../views/DictManage.vue'
 import TenantManage from '../views/TenantManage.vue'
+import OrderManage from '../views/OrderManage.vue'
 import Login from '../views/Login.vue'
 import Profile from '../views/Profile.vue'
 
@@ -64,19 +65,25 @@ const routes = [
             component: DeptManage,
             meta: { title: '部门管理', icon: 'OfficeBuilding', requireAuth: true }
           },
-          {
-            path: 'dict',
-            name: 'DictManage',
-            component: DictManage,
-            meta: { title: '数据字典', icon: 'List', requireAuth: true }
-          },
-          {
-            path: 'tenant',
-            name: 'TenantManage',
-            component: TenantManage,
-            meta: { title: '租户管理', icon: 'OfficeBuilding', requireAuth: true }
+          { 
+            path: 'dict', 
+            name: 'DictManage', 
+            component: DictManage, 
+            meta: { title: '数据字典', icon: 'List', requireAuth: true } 
           }
         ]
+      },
+      { 
+        path: 'tenant', 
+        name: 'TenantManage', 
+        meta: { title: '租户管理', icon: 'OfficeBuilding', requireAuth: true }, 
+        component: TenantManage 
+      },
+      { 
+        path: 'order', 
+        name: 'OrderManage', 
+        meta: { title: '订单管理', icon: 'List', requireAuth: true }, 
+        component: OrderManage 
       }
     ]
   }
